@@ -28,5 +28,5 @@ TO PLAY THE GAME:
 1. Download human-ai-game.zip
 2. Extract
 3. Instructions on how to play are written in README.md that is in the .zip
-mainAI contains player.py, this is the smart main AI
-randomAI contains player.py, this just plays the game in a random manner
+  mainAI contains player.py, this is the smart main AI.
+  randomAI contains player.py, this just plays the game in a random manner

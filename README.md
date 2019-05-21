@@ -1,7 +1,7 @@
 # tictactoeAlphaBeta
 Python AI script for 4x4 Tic Tac Toe using Minimax with Alpha-Beta Pruning.
 
-This is an AI script, game board is not included. You can use this script and modify to your own game board. The main function that is going to be called is Play(), the Play() function takes in your game board, and the player as arguments. Player X or O can either be 0 or 1. This was made for a 4x4 tic tac toe with a game board that uses 1D Array. Empty cells have a value of -1.
+This is an AI script. You can use this script and modify to your own game board. The main function that is going to be called is Play(), the Play() function takes in your game board, and the player as arguments. Player X or O can either be 0 or 1. This was made for a 4x4 tic tac toe with a game board that uses 1D Array. Empty cells have a value of -1.
 
 There are two heuristic functions in the player.py file. instructions on how to switch to either one of them are commented in the code.
 
@@ -23,3 +23,10 @@ Potential Optimization:
 1. Apply symmetry
 2. Apply memoization
 3. Better heuristic function
+
+TO PLAY THE GAME:
+1. Download human-ai-game.zip
+2. Extract
+3. Instructions on how to play are written in README.md that is in the .zip
+mainAI contains player.py, this is the smart main AI
+randomAI contains player.py, this just plays the game in a random manner

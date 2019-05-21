@@ -16,7 +16,7 @@ class Player:
         bestScore = -infinity # Player is maximizing player so bestScore == -infinity
         choices = [] # Creates an array to store best positions
         localState = copy.deepcopy(game_board_state) #Makes a local copy of the game board
-        depth = 5 # Depth is set to 7 because that is the max depth in 4x4 to reach a winning condition
+        depth = 5 # Depth is set to 5 because that is the max depth in 4x4 to reach a winning condition
 
         # Loops through every child of game board to calculate the minimax
         for position in emptyPos: # Iterates through every empty positions
@@ -114,264 +114,361 @@ class Player:
                 #Check if there is a win for either player
                 if board[j] != -1 and (board[j] == board[j+4] == board[j+8] == board[j+12]): # vertical line
                     if board[j] == player:
-                        score += (1000 *(depth)) # If original player wins, return 1000 * depth
+                        score += (10000 *(depth)) # If original player wins, return 1000 * depth
                         return score # Return score if there is a win, stop the loop.
                     else:
-                        score += (-1000 *(depth)) # If opponent wins, return -1000 * depth
+                        score += (-10000 *(depth)) # If opponent wins, return -1000 * depth
                         return score
 
                 elif board[j*4] != -1 and (board[j*4] == board[j*4+1] == board[j*4+2] == board[j*4+3]): # horizontal line
                     if board[j*4] == player:
-                        score += (1000 *(depth))
+                        score += (10000 *(depth))
                         return score
                     else:
-                        score += (-1000 *(depth))
+                        score += (-10000 *(depth))
                         return score
 
                 elif board[0] != -1 and (board[0] == board[5] == board[10] == board[15]): # top left diagonal                
                     if board[0] == player:
-                        score += (1000 *(depth))
+                        score += (10000 *(depth))
                         return score
                     else:
-                        score += (-1000 *(depth))
+                        score += (-10000 *(depth))
                         return score
 
                 elif board[3] != -1 and (board[3] == board[6] == board[9] == board[12]): # top right diagonal                 
                     if board[3] == player:
-                        score += (1000 *(depth))
+                        score += (10000 *(depth))
                         return score
                     else:
-                        score += (-1000 *(depth))
+                        score += (-10000 *(depth))
                         return score
 
-                else:
-                    if board[j+12] != -1 and (board[j] == board[j+8] == board[j+4]) and (board[j] == -1): # reverse vertical line
-                        if board[j+12] == player:
-                            score += (100 *(depth))
-                        else:
-                            score += (-100 *(depth))
+                
+                if board[j+12] != -1 and (board[j+12] == board[j+8] == board[j+4]) and (board[j] != -1): # reverse vertical line
+                        if (board[j+12] == player) and (board[j] != player):
+                            score += (1000 *(depth))
+                        elif (board[j+12] != player) and (board[j] == player):
+                            score += (-1000 *(depth))
 
-                    if board[j+4] != -1 and (board[j+8] == board[j+4]) and (board[j] and board[j+12] == -1): # vertical line
-                        if board[j+4] == player:
-                            score += (10 *(depth))
-                        else:
-                            score += (-10 *(depth))
-
-                    if board[j+12] != -1 and (board[j] == board[j+12]) and (board[j+4] and board[8] == -1): # vertical line
-                        if board[j+12] == player:
-                            score += (10 *(depth))
-                        else:
-                            score += (-10 *(depth))
-
-                    if board[j] != -1 and (board[j] == board[j+4] == board[j+8]) and (board[j+12] == -1): # vertical line
-                        if board[j] == player:
-                            score += (10 *(depth))
-                        else:
-                            score += (-10 *(depth))
-
-                    if board[j] != -1 and (board[j] == board[j+4]) and (board[j+8] and board[j+12] == -1): # vertical line
-                        if board[j] == player:
-                            score += (10 *(depth))
-                        else:
-                            score += (-10 *(depth))
-
-                    if board[j] != -1 and (board[j+4] and board[j+8] and board[j+12] == -1): # vertical line
-                        if board[j] == player:
-                            score += (1 *(depth))
-                        else:
-                            score += (-1 *(depth))
-
-                    if board[j+4] != -1 and (board[j] and board[j+8] and board[j+12] == -1): # vertical line
-                        if board[j+4] == player:
-                            score += (1 *(depth))
-                        else:
-                            score += (-1 *(depth))
-
-                    if board[j+8] != -1 and (board[j] and board[j+4] and board[j+12] == -1): # vertical line
-                        if board[j+8] == player:
-                            score += (1 *(depth))
-                        else:
-                            score += (-1 *(depth))
-
-                    if board[j+12] != -1 and (board[j] and board[j+8] and board[j+4] == -1): # vertical line
-                        if board[j+12] == player:
-                            score += (1 *(depth))
-                        else:
-                            score += (-1 *(depth))
-
-                    if board[j*4+3] != -1 and (board[j*4+3] == board[j*4+1] == board[j*4+2]) and (board[j*4] == -1): # Switchhorizontal line
-                        if board[j*4+3] == player:
-                            score += (100 *(depth))
-                        else:
-                            score += (-100 *(depth))
-
-                    if board[j*4+2] != -1 and (board[j*4+2] == board[j*4+1]) and (board[j*4] and board[j*4+3] == -1): # horizontal line
-                        if board[j*4+2] == player:
-                            score += (10 *(depth))
-                        else:
-                            score += (-10 *(depth))
-
-                    if board[j*4] != -1 and (board[j*4] == board[j*4+3]) and (board[j*4+2] and board[j*4+1] == -1): # horizontal line
-                        if board[j*4] == player:
-                            score += (10 *(depth))
-                        else:
-                            score += (-10 *(depth))
+                if board[j] != -1 and (board[j+12] == board[j+8] == board[j]) and (board[j+4] != -1): # reverse vertical line
+                        if (board[j] == player) and (board[j+4] != player):
+                            score += (1000 *(depth))
+                        elif (board[j] != player) and (board[j+4] == player):
+                            score += (-1000 *(depth))
 
 
-                    if board[j*4] != -1 and (board[j*4] == board[j*4+1] == board[j*4+2]) and (board[j*4+3] == -1): # Switchhorizontal line
-                        if board[j*4] == player:
-                            score += (100 *(depth))
-                        else:
-                            score += (-100 *(depth))
+                if board[j+4] != -1 and (board[j+12] == board[j+4] == board[j]) and (board[j+8] != -1): # reverse vertical line
+                        if (board[j+4] == player) and (board[j+8] != player):
+                            score += (1000 *(depth))
+                        elif (board[j+4] != player) and (board[j+8] == player):
+                            score += (-1000 *(depth))
 
-                    if board[j*4] != -1 and (board[j*4] == board[j*4+1]) and (board[j*4+2] and board[j*4+3] == -1): # horizontal line
-                        if board[j*4] == player:
-                            score += (10 *(depth))
-                        else:
-                            score += (-10 *(depth))
+                if board[j] != -1 and (board[j] == board[j+8] == board[j+4]) and (board[j+12] != -1): # reverse vertical line
+                        if (board[j] == player) and (board[j+12] != player):
+                            score += (1000 *(depth))
+                        elif (board[j] != player) and (board[j+12] == player):
+                            score += (-1000 *(depth))
 
-                    if board[j*4] != -1 and (board[j*4+1] and board[j*4+2] and board[j*4+3] == -1): # horizontal line
-                        if board[j*4] == player:
-                            score += (1 *(depth))
-                        else:
-                            score += (-1 *(depth))
+                if board[j*4+3] != -1 and (board[j*4+3] == board[j*4+1] == board[j*4+2]) and (board[j*4] != -1): # Switchhorizontal line
+                        if (board[j*4+3] == player) and (board[j*4] != player):
+                            score += (1000 *(depth))
+                        elif (board[j*4+3] != player) and (board[j*4] == player):
+                            score += (-1000 *(depth))
+
+                if board[j*4] != -1 and (board[j*4+3] == board[j*4+1] == board[j*4]) and (board[j*4+2] != -1): # Switchhorizontal line
+                        if (board[j*4] == player) and (board[j*4+2] != player):
+                            score += (1000 *(depth))
+                        elif (board[j*4] != player) and (board[j*4+2] == player):
+                            score += (-1000 *(depth))
+
+                if board[j*4] != -1 and (board[j*4+3] == board[j*4+2] == board[j*4]) and (board[j*4+1] != -1): # Switchhorizontal line
+                        if (board[j*4] == player) and (board[j*4+1] != player):
+                            score += (1000 *(depth))
+                        elif (board[j*4] != player) and (board[j*4+1] == player):
+                            score += (-1000 *(depth))
+
+                if board[j*4] != -1 and (board[j*4] == board[j*4+1] == board[j*4+2]) and (board[j*4+3] != -1): # Switchhorizontal line
+                        if (board[j*4] == player) and (board[j*4+3] != player):
+                            score += (1000 *(depth))
+                        elif (board[j*4] != player) and (board[j*4+3] == player):
+                            score += (-1000 *(depth))
+
+                if board[15] != -1 and (board[15] == board[5] == board[10]) and (board[0] != -1): # Switchminor diagonal
+                        if (board[15] == player) and (board[0] != player):
+                            score += (1000 *(depth))
+                        elif (board[15] != player) and (board[0] == player):
+                            score += (-1000 *(depth))
+
+                if board[0] != -1 and (board[15] == board[0] == board[10]) and (board[5] != -1): # Switchminor diagonal
+                        if (board[0] == player) and (board[5] != player):
+                            score += (1000 *(depth))
+                        elif (board[0] != player) and (board[5] == player):
+                            score += (-1000 *(depth))
+
+                if board[0] != -1 and (board[15] == board[0] == board[5]) and (board[10] != -1): # Switchminor diagonal
+                        if (board[0] == player) and (board[10] != player):
+                            score += (1000 *(depth))
+                        elif (board[0] != player) and (board[10] == player):
+                            score += (-1000 *(depth))
+
+                if board[0] != -1 and (board[0] == board[5] == board[10]) and (board[15] != -1): # Switchminor diagonal
+                        if (board[0] == player) and (board[15] != player):
+                            score += (1000 *(depth))
+                        elif (board[0] != player) and (board[15] == player):
+                            score += (-1000 *(depth))
+
+                if board[3] != -1 and (board[3] == board[6] == board[9]) and (board[12] != -1): # Switchmajor diagonal
+                        if (board[3] == player) and (board[12] != player):
+                            score += (1000 *(depth))
+                        elif (board[3] != player) and (board[12] == player):
+                            score += (-1000 *(depth))
+
+                if board[3] != -1 and (board[3] == board[12] == board[9]) and (board[6] != -1): # Switchmajor diagonal
+                        if (board[3] == player) and (board[6] != player):
+                            score += (1000 *(depth))
+                        elif (board[3] != player) and (board[6] == player):
+                            score += (-1000 *(depth))
+
+                if board[3] != -1 and (board[3] == board[12] == board[6]) and (board[9] != -1): # Switchmajor diagonal
+                        if (board[3] == player) and (board[9] != player):
+                            score += (1000 *(depth))
+                        elif (board[3] != player) and (board[9] == player):
+                            score += (-1000 *(depth))
+
+                if board[12] != -1 and (board[12] == board[6] == board[9]) and (board[3] != -1): # Switchmajor diagonal
+                        if (board[12] == player) and (board[3] != player):
+                            score += (1000 *(depth))
+                        elif (board[12] != player) and (board[3] == player):
+                            score += (-1000 *(depth))
+
+                if board[j+12] != -1 and (board[j] == board[j+8] == board[j+4]) and (board[j] == -1): # reverse vertical line
+                    if board[j+12] == player:
+                        score += (100 *(depth))
+                    else:
+                        score += (-100 *(depth))
+
+                if board[j+4] != -1 and (board[j+8] == board[j+4]) and (board[j] and board[j+12] == -1): # vertical line
+                    if board[j+4] == player:
+                        score += (10 *(depth))
+                    else:
+                        score += (-10 *(depth))
+
+                if board[j+12] != -1 and (board[j] == board[j+12]) and (board[j+4] and board[8] == -1): # vertical line
+                    if board[j+12] == player:
+                        score += (10 *(depth))
+                    else:
+                        score += (-10 *(depth))
+
+                if board[j] != -1 and (board[j] == board[j+4] == board[j+8]) and (board[j+12] == -1): # vertical line
+                    if board[j] == player:
+                        score += (10 *(depth))
+                    else:
+                        score += (-10 *(depth))
+
+                if board[j] != -1 and (board[j] == board[j+4]) and (board[j+8] and board[j+12] == -1): # vertical line
+                    if board[j] == player:
+                        score += (10 *(depth))
+                    else:
+                        score += (-10 *(depth))
+
+                if board[j] != -1 and (board[j+4] and board[j+8] and board[j+12] == -1): # vertical line
+                    if board[j] == player:
+                        score += (1 *(depth))
+                    else:
+                        score += (-1 *(depth))
+
+                if board[j+4] != -1 and (board[j] and board[j+8] and board[j+12] == -1): # vertical line
+                    if board[j+4] == player:
+                        score += (1 *(depth))
+                    else:
+                        score += (-1 *(depth))
+
+                if board[j+8] != -1 and (board[j] and board[j+4] and board[j+12] == -1): # vertical line
+                    if board[j+8] == player:
+                        score += (1 *(depth))
+                    else:
+                        score += (-1 *(depth))
+
+                if board[j+12] != -1 and (board[j] and board[j+8] and board[j+4] == -1): # vertical line
+                    if board[j+12] == player:
+                        score += (1 *(depth))
+                    else:
+                        score += (-1 *(depth))
+
+                if board[j*4+3] != -1 and (board[j*4+3] == board[j*4+1] == board[j*4+2]) and (board[j*4] == -1): # Switchhorizontal line
+                    if board[j*4+3] == player:
+                        score += (100 *(depth))
+                    else:
+                        score += (-100 *(depth))
+
+                if board[j*4+2] != -1 and (board[j*4+2] == board[j*4+1]) and (board[j*4] and board[j*4+3] == -1): # horizontal line
+                    if board[j*4+2] == player:
+                        score += (10 *(depth))
+                    else:
+                        score += (-10 *(depth))
+
+                if board[j*4] != -1 and (board[j*4] == board[j*4+3]) and (board[j*4+2] and board[j*4+1] == -1): # horizontal line
+                    if board[j*4] == player:
+                        score += (10 *(depth))
+                    else:
+                        score += (-10 *(depth))
 
 
-                    if board[j*4+1] != -1 and (board[j*4] and board[j*4+2] and board[j*4+3] == -1): # horizontal line
-                        if board[j*4+1] == player:
-                            score += (1 *(depth))
-                        else:
-                            score += (-1 *(depth))
+                if board[j*4] != -1 and (board[j*4] == board[j*4+1] == board[j*4+2]) and (board[j*4+3] == -1): # Switchhorizontal line
+                    if board[j*4] == player:
+                        score += (100 *(depth))
+                    else:
+                        score += (-100 *(depth))
+
+                if board[j*4] != -1 and (board[j*4] == board[j*4+1]) and (board[j*4+2] and board[j*4+3] == -1): # horizontal line
+                    if board[j*4] == player:
+                        score += (10 *(depth))
+                    else:
+                        score += (-10 *(depth))
+
+                if board[j*4] != -1 and (board[j*4+1] and board[j*4+2] and board[j*4+3] == -1): # horizontal line
+                    if board[j*4] == player:
+                        score += (1 *(depth))
+                    else:
+                        score += (-1 *(depth))
 
 
-                    if board[j*4+2] != -1 and (board[j*4] and board[j*4+1] and board[j*4+3] == -1): # horizontal line
-                        if board[j*4+2] == player:
-                            score += (1 *(depth))
-                        else:
-                            score += (-1 *(depth))
+                if board[j*4+1] != -1 and (board[j*4] and board[j*4+2] and board[j*4+3] == -1): # horizontal line
+                    if board[j*4+1] == player:
+                        score += (1 *(depth))
+                    else:
+                        score += (-1 *(depth))
 
 
-                    if board[j*4+3] != -1 and (board[j*4] and board[j*4+1] and board[j*4+2] == -1): # horizontal line
-                        if board[j*4+3] == player:
-                            score += (1 *(depth))
-                        else:
-                            score += (-1 *(depth))
+                if board[j*4+2] != -1 and (board[j*4] and board[j*4+1] and board[j*4+3] == -1): # horizontal line
+                    if board[j*4+2] == player:
+                        score += (1 *(depth))
+                    else:
+                        score += (-1 *(depth))
 
 
-                    if board[15] != -1 and (board[15] == board[5] == board[10]) and (board[0] == -1): # Switchminor diagonal
-                        if board[15] == player:
-                            score += (100 *(depth))
-                        else:
-                            score += (-100 *(depth))
+                if board[j*4+3] != -1 and (board[j*4] and board[j*4+1] and board[j*4+2] == -1): # horizontal line
+                    if board[j*4+3] == player:
+                        score += (1 *(depth))
+                    else:
+                        score += (-1 *(depth))
 
 
-                    if board[10] != -1 and (board[10] == board[5]) and (board[0] and board[15] == -1): # minor diagonal
-                        if board[10] == player:
-                            score += (10 *(depth))
-                        else:
-                            score += (-10 *(depth))
+                if board[15] != -1 and (board[15] == board[5] == board[10]) and (board[0] == -1): # Switchminor diagonal
+                    if board[15] == player:
+                        score += (100 *(depth))
+                    else:
+                        score += (-100 *(depth))
 
 
-                    if board[0] != -1 and (board[0] == board[15]) and (board[5] and board[10] == -1): # minor diagonal
-                        if board[0] == player:
-                            score += (10 *(depth))
-                        else:
-                            score += (-10 *(depth))
+                if board[10] != -1 and (board[10] == board[5]) and (board[0] and board[15] == -1): # minor diagonal
+                    if board[10] == player:
+                        score += (10 *(depth))
+                    else:
+                        score += (-10 *(depth))
 
 
-                    if board[0] != -1 and (board[0] == board[5] == board[10]) and (board[15] == -1): # Switchminor diagonal
-                        if board[0] == player:
-                            score += (100 *(depth))
-                        else:
-                            score += (-100 *(depth))
-
-                    if board[0] != -1 and (board[0] == board[5]) and (board[10] and board[15] == -1): # minor diagonal
-                        if board[0] == player:
-                            score += (10 *(depth))
-                        else:
-                            score += (-10 *(depth))
-
-                    if board[0] != -1 and (board[5] and board[10] and board[15] == -1): # minor diagonal
-                        if board[0] == player:
-                            score += (1 *(depth))
-                        else:
-                            score += (-1 *(depth))
-
-                    if board[5] != -1 and (board[0] and board[10] and board[15] == -1): # minor diagonal
-                        if board[5] == player:
-                            score += (1 *(depth))
-                        else:
-                            score += (-1 *(depth))
+                if board[0] != -1 and (board[0] == board[15]) and (board[5] and board[10] == -1): # minor diagonal
+                    if board[0] == player:
+                        score += (10 *(depth))
+                    else:
+                        score += (-10 *(depth))
 
 
-                    if board[10] != -1 and (board[0] and board[5] and board[15] == -1): # minor diagonal
-                        if board[10] == player:
-                            score += (1 *(depth))
-                        else:
-                            score += (-1 *(depth))
+                if board[0] != -1 and (board[0] == board[5] == board[10]) and (board[15] == -1): # Switchminor diagonal
+                    if board[0] == player:
+                        score += (100 *(depth))
+                    else:
+                        score += (-100 *(depth))
+
+                if board[0] != -1 and (board[0] == board[5]) and (board[10] and board[15] == -1): # minor diagonal
+                    if board[0] == player:
+                        score += (10 *(depth))
+                    else:
+                        score += (-10 *(depth))
+
+                if board[0] != -1 and (board[5] and board[10] and board[15] == -1): # minor diagonal
+                    if board[0] == player:
+                        score += (1 *(depth))
+                    else:
+                        score += (-1 *(depth))
+
+                if board[5] != -1 and (board[0] and board[10] and board[15] == -1): # minor diagonal
+                    if board[5] == player:
+                        score += (1 *(depth))
+                    else:
+                        score += (-1 *(depth))
 
 
-                    if board[15] != -1 and (board[0] and board[5] and board[10] == -1): # minor diagonal
-                        if board[15] == player:
-                            score += (1 *(depth))
-                        else:
-                            score += (-1 *(depth))
+                if board[10] != -1 and (board[0] and board[5] and board[15] == -1): # minor diagonal
+                    if board[10] == player:
+                        score += (1 *(depth))
+                    else:
+                        score += (-1 *(depth))
 
 
-                    if board[12] != -1 and (board[12] == board[6] == board[9]) and (board[3] == -1): # Switchmajor diagonal
-                        if board[12] == player:
-                            score += (100 *(depth))
-                        else:
-                            score += (-100 *(depth))
+                if board[15] != -1 and (board[0] and board[5] and board[10] == -1): # minor diagonal
+                    if board[15] == player:
+                        score += (1 *(depth))
+                    else:
+                        score += (-1 *(depth))
 
 
-                    if board[9] != -1 and (board[9] == board[6]) and (board[3] and board[12] == -1): # major diagonal
-                        if board[9] == player:
-                            score += (10 *(depth))
-                        else:
-                            score += (-10 *(depth))
-
-                    if board[3] != -1 and (board[3] == board[12]) and (board[6] and board[9] == -1): # major diagonal
-                        if board[3] == player:
-                            score += (10 *(depth))
-                        else:
-                            score += (-10 *(depth))
+                if board[12] != -1 and (board[12] == board[6] == board[9]) and (board[3] == -1): # Switchmajor diagonal
+                    if board[12] == player:
+                        score += (100 *(depth))
+                    else:
+                        score += (-100 *(depth))
 
 
-                    if board[3] != -1 and (board[3] == board[6] == board[9]) and (board[12] == -1): # Switchmajor diagonal
-                        if board[3] == player:
-                            score += (100 *(depth))
-                        else:
-                            score += (-100 *(depth))
+                if board[9] != -1 and (board[9] == board[6]) and (board[3] and board[12] == -1): # major diagonal
+                    if board[9] == player:
+                        score += (10 *(depth))
+                    else:
+                        score += (-10 *(depth))
 
-                    if board[3] != -1 and (board[3] == board[6]) and (board[9] and board[12] == -1): # major diagonal
-                        if board[3] == player:
-                            score += (10 *(depth))
-                        else:
-                            score += (-10 *(depth))
+                if board[3] != -1 and (board[3] == board[12]) and (board[6] and board[9] == -1): # major diagonal
+                    if board[3] == player:
+                        score += (10 *(depth))
+                    else:
+                        score += (-10 *(depth))
 
-                    if board[3] != -1 and (board[6] and board[9] and board[12] == -1): # major diagonal
-                        if board[3] == player:
-                            score += (1 *(depth))
-                        else:
-                            score += (-1 *(depth))
 
-                    if board[12] != -1 and (board[6] and board[9] and board[3] == -1): # major diagonal
-                        if board[3] == player:
-                            score += (1 *(depth))
-                        else:
-                            score += (-1 *(depth))
-                            
-                    if board[9] != -1 and (board[6] and board[12] and board[3] == -1): # major diagonal
-                        if board[3] == player:
-                            score += (1 *(depth))
-                        else:
-                            score += (-1 *(depth))
+                if board[3] != -1 and (board[3] == board[6] == board[9]) and (board[12] == -1): # Switchmajor diagonal
+                    if board[3] == player:
+                        score += (100 *(depth))
+                    else:
+                        score += (-100 *(depth))
 
-                    if board[6] != -1 and (board[9] and board[12] and board[3] == -1): # major diagonal
-                        if board[3] == player:
-                            score += (1 *(depth))
-                        else:
-                            score += (-1 *(depth))
+                if board[3] != -1 and (board[3] == board[6]) and (board[9] and board[12] == -1): # major diagonal
+                    if board[3] == player:
+                        score += (10 *(depth))
+                    else:
+                        score += (-10 *(depth))
+
+                if board[3] != -1 and (board[6] and board[9] and board[12] == -1): # major diagonal
+                    if board[3] == player:
+                        score += (1 *(depth))
+                    else:
+                        score += (-1 *(depth))
+
+                if board[12] != -1 and (board[6] and board[9] and board[3] == -1): # major diagonal
+                    if board[3] == player:
+                        score += (1 *(depth))
+                    else:
+                        score += (-1 *(depth))
+                        
+                if board[9] != -1 and (board[6] and board[12] and board[3] == -1): # major diagonal
+                    if board[3] == player:
+                        score += (1 *(depth))
+                    else:
+                        score += (-1 *(depth))
+
+                if board[6] != -1 and (board[9] and board[12] and board[3] == -1): # major diagonal
+                    if board[3] == player:
+                        score += (1 *(depth))
+                    else:
+                        score += (-1 *(depth))
             return score # default return value if no win condition is found
 ###############################################################################################################

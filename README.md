@@ -6,12 +6,13 @@ This is an AI script. You can use this script and modify to your own game board.
 There are two heuristic functions in the player.py file. instructions on how to switch to either one of them are commented in the code.
 
 The default heuristic function's logic goes like this:
-1. +1000 * (depth+1) for EACH 4-in-a-line for computer.
-2. +100 * (depth+1) for EACH three-in-a-line (with a empty cell) for computer.
-3. +10 * (depth+1) for EACH two-in-a-line (with two empty cells) for computer.
-4. +1 * (depth+1) for EACH one-in-a-line (with three empty cells) for computer.
-5. Negative scores for opponent, i.e., -1000, -100, -10, -1 * (depth+1) for EACH opponent's 4-in-a-line, 3-in-a-line, 2-in-a-line, and 1-in-a-line
-6. 0 otherwise (empty lines or lines with both computer's and opponent's seeds).
+1. +10000 * (depth+1) for EACH 4-in-a-line for computer.
+2. +1000 * (depth+1) for EACH four-in-a-line with 1 opponent cell in the line.
+3. +100 * (depth+1) for EACH three-in-a-line (with a empty cell) for computer.
+4. +10 * (depth+1) for EACH two-in-a-line (with two empty cells) for computer.
+5. +1 * (depth+1) for EACH one-in-a-line (with three empty cells) for computer.
+6. Negative scores for opponent, i.e., -10000, -1000, -100, -10, -1 * (depth+1) for EACH opponent's 4-in-a-line, 4-in-a-line(1 opponent), 2-in-a-line, and 1-in-a-line
+7. 0 otherwise (empty lines or lines with both computer's and opponent's seeds).
 
 The other heuristic function is a much simpler:
 1. +11 * (depth+1) for player win
